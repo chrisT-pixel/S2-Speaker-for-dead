@@ -1,0 +1,5 @@
+<div class="interact-wrapper">
+    <input type="text" [(ngModel)]="textToSend" placeholder="Enter your text">
+    <button (click)="sendAndReceiveText()">Submit</button>
+    <p *ngIf="responseText">{{ responseText }}</p>
+</div>

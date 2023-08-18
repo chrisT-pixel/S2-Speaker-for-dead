@@ -1,0 +1,96 @@
+has been less work in providing support for facetoface collaboration. This is particularly true for 
+workstations, even if they were side by side, did not perform as well as if they were huddled around 
+interact and collaborate with each other. In earlier work we found that users prefer collaboration in 
+provide a natural environment for viewing spatial data it is often challenging to interact with the 
+enhanced real objects to support facetoface collaboration or provide a tangible representation of 
+and play with electronic triangular objects to compose poetry or interactive stories (Gorbet 1998). 
+have, their use as semantic representations, their spatial relationships, and their ability to help focus 
+graphics there is also often a disconnect between the task space and display space. In the Triangles 
+objects on projection surfaces is difficult, particularly when trying to support multiple users each 
+projection surface, users are not able to pick virtual images off the surface and manipulate them in 
+collaborative AR interface to more traditional facetoface and screen based collaboration. Finally, 
+the physical objects and interactions are equally as important as the virtual imagery and provide a 
+very intuitive way to interact with the AR interface. The intimate relationship between the real and 
+across a table from one another (fig. 1). On the table were marked cards that could be freely moved 
+collaboratively match up the virtual models, by placing related models side by side. When users get 
+pick up and manipulate the physical cards to view the virtual objects. Once they held a card in view 
+and could see a virtual object, it was common to see people rotating the cards at all angles to see the 
+Table 1 summarizes the results. As can be seen, users felt that they could very easily play with the 
+other people and interact with the virtual objects. Both of these are significantly higher than the 
+to the right, showing that users felt that they could easily collaborate with others and interact with 
+their hand was pointing at and icons representing data available at that point. If the user wanted to 
+view some of the geological dataset they placed a terrain marker on the map (figure 5) and in their 
+HMD they would see a virtual terrain model of that location (figure 6). Users could then pick up the 
+If the user wanted to see a new portion of the virtual terrain they simply moved the marker to a new 
+hydrology and well information. Placing a soil tile beside the terrain model would cause the texture 
+compelling experience. Associating a virtual dataset with a physical object meant that this data was 
+as easy to manipulate as the real object. They also liked the ability to see other users in the real 
+these interfaces do not use real objects to support the facetoface interaction, or are based around 
+provide useful results for others to build on as well as give some guidance on the metrics that may 
+sitting side by side and their attention is focused on the screen space (figure 8). In this case the task 
+table from one another can see each other at the same time as virtual objects in their midst. So we 
+users will be able to more easily see each other and their nonverbal cues, and will be more easily 
+able to use gestures to interact with the objects than in the projection condition. Thus we should see 
+the projection screen condition it will be more difficult for users to see each other and they cannot 
+use freehand gestures to interact with the objects, so we can predict that the collaboration will rely 
+generation of displays the field of view is limited, reducing peripheral cues, the resolution may be 
+Subjects were told that they could freely use speech and gesture to collaborate with their partner, 
+FtF/ Facetoface interaction: The subjects sat on opposite sides of a table with a real street map 
+marked on it (See figures 9,10). They were free to layout a set of nine real model buildings subject 
+buildings on the real cards (see figure 13). Kanji characters were chosen to ensure that users could 
+find the position and orientation of the card relative to a fixed magnetic source. Projected on the 
+screen was an interface that allowed subjects to pick and place threedimensional virtual models of 
+buildings on a flat ground plane with a texture map of a street plan on it (figure 15). On the screen 
+wherever they liked on the street plan. In addition, a keyboard was placed on the table between the 
+used in the AR condition were also used in this condition. Before beginning this condition subjects 
+interface. Unlike a mousebased interface it also supported simultaneous user input, enabling users 
+of informal user testing to ensure that users could interact with the virtual models in an intuitive 
+A speaker turn was defined as one user taking control of the conversation and speaking until either 
+recorded. Although users had a fixed time to complete the task (7 minutes), in practice it took far 
+ranged from 21 year to 38 years old. Several of these pairs were later dropped from the study due to 
+important to satisfy all the ten rules. These factors mean that subjects typically went through the 
+After an initial short Prep phase the subjects spent most of their time in the Solve and Check phases, 
+building rules were still satisfied. From the video records and the transcripts made we measured the 
+factor ANOVA on the solution times, we find a significant difference; F(2,33) = 10.53, P&lt; 0.001. 
+conditions. These were then coded for low and hilevel speech behaviors. The video of each pair of 
+phrases than in the Projection condition. The difference is statistically significant; a onefactor 
+variance between subjects, but despite this we find a significant difference across all conditions for 
+condition. Using a paired onetailed ttest we find that this is a significant difference; t(42) =2.20, 
+However this is not surprising as it was impossible to make collaborative gestures in the Projection 
+FacetoFace condition and then average these ratios over all users. In effect this is considering the 
+After each conditon user filled out a survey on how they felt about the interface and how well they 
+could collaborate with their partner. All of the questions were answered on a scale of one to seven, 
+F(2,69) = 5.96, P &lt; 0.005. Users felt that the it was almost as difficult to work together in the AR 
+partner?, users felt that it easier to understand each other in the facetoface condition, while the 
+Projection and AR conditions were as difficult to understand each other (figure 19). As before there 
+was a significant difference in average values (A one factor ANOVA, F(2,69) = 6.31, P &lt; 0.005). 
+When asked how easily they could tell where their partner was looking and pointing, users felt that 
+perceiving these nonverbal cues was far easier in the facetoface condition and there was little or 
+Users were also asked how easy they felt it was to pick and move the buildings. As figure 21 shows, 
+they felt that it was nearly as easy to pick and move the AR objects as it was the real models, and 
+these questions (Q1, Q3, Q4) there was a significant difference between conditions. There is little 
+field of view, low resolution and blurry imagery. Several users felt that the limited field of view 
+tracking. In half of the interviews the problem of the virtual buildings flicking in and out of view 
+Despite these perception problems users felt that interaction with the virtual objects was easier in 
+contrast in the Projection condition you could see everything beautifully but interaction was tough 
+interacting with objects in the Projection condition. For some people this was because of the mouse 
+their collaborators hands. Some subjects said that this was due to the difficulty of seeing their real 
+seven interviews subjects said that in the facetoface condition they were able to make eye contact 
+and see the gaze direction of their partner sitting across the table. However in the AR condition the 
+narrow field of view and bulky display made it impossible to see gaze direction. In both the AR and 
+FacetoFace conditions the subjects said that most of their attention was focused on the task space 
+in four of the interviews subjects said that they did not need to see the gaze of their collaborator 
+partner made the Projection condition the most difficult to collaborate in. For example one subject 
+These results partially validate our intial hypothesis. In their deictic speech patterns there was no 
+by the AR display affordances, users felt that they could pick and move objects as easily in the AR 
+vision, making it significantly more difficult for them to perceive when their partner was looking at 
+them. It is encouraging that even with reduced perceptual cues subjects are exhibiting behaviors in 
+from traditional interfaces. It is anticipated that higher resolution AR displays with a larger field of 
+particularly with how easily users feel it is to manipulate the virtual objects and with some of their 
+with these types of interfaces is different from more traditional computer supported tools. In this 
+need to conduct further experiments where object manipulation is a small part of the task at hand. 
+The results from this experiment show the impact of interface form factor on collaboration. Using a 
+and severely reduced their perceptual cues. However there are other display form factors that could 
+be used such as handheld or flat panel displays. These may restore some of the peripheral cues lost 
+real world and would easily be able to see their collaborator across the top of the display as well as 
+Reality interfaces is that they can be seamlessly be combined with other more traditional interface 

@@ -1,0 +1,155 @@
+aHuman Interface Technology Laboratory, University of Washington, Box 352142, Fluke Hall, Mason Road, Seattle, 
+WA 98195, USA bFaculty of Information Sciences, Hiroshima City University, 341 OzukaHigashi, Asaminamiku, Hiroshima 7313194, Japan 
+The MagicBook is a Mixed Reality interface that uses a real book to seamlessly transport users between Reality and 
+Virtuality. A visionbased tracking method is used to overlay virtual models on real book pages, creating an Augmented Reality (AR) scene. When users see an AR scene they are interested in they can fly inside it and experience it as an immersive Virtual Reality (VR). The interface also supports multiscale collaboration, allowing multiple users to 
+experience the same virtual environment either from an egocentric or an exocentric perspective. In this paper we describe the MagicBook prototype, potential applications and user feedback. r 2001 Elsevier Science Ltd. All rights reserved. 
+transparency that significantly enhances humancomputer interaction. The goal is to make interacting with a computer as easy as interacting with the real world. 
+There are several approaches for achieving this. In the field of Tangible User Interfaces [1], real world objects are used as interface widgets and the computer disappears into the physical workspace. In an immersive 
+Virtual Reality (VR) environment, the real world is replaced entirely by computergenerated imagery and the user is enveloped in the virtual space. Finally, 
+Augmented Reality (AR) blends elements of the real and virtual by superimposing virtual images on the real world. 
+As Milgram points out [2], these types of computer interfaces can be placed along a continuum according to how much of the users environment is computer 
+Tangible User Interfaces lie far to the left, while immersive virtual environments are placed at the rightmost extreme. In between are Augmented Reality 
+interfaces, where virtual imagery is added to the real world, and Augmented Virtuality interfaces, where the real world content is brought into immersive virtual 
+scenes. Most current user interfaces can be placed at specific points along this line. In addition to single user applications, many compu
+boration in a purely physical setting, in an AR setting, or in an immersive virtual world. For example, Wellners DigitalDesk [3] and Braves work on the InTouch and 
+PSyBench [4] interfaces show how physical objects can enhance both facetoface and remote collaboration. In this case, the real objects provide a common semantic 
+representation as well as a tangible interface for the digital information space. Work on the DIVE project [5], GreenSpace [6] and other fully immersive multi
+participant virtual environments have shown that collaborative work is also intuitive in completely virtual surroundings. Users can freely move through the space, setting their own viewpoints and spatial relationships, 
+Finally, collaborative AR projects such as Studierstube [7] and AR2 Hockey [8] allow multiple users to work in both the real and virtual world, simultaneously, facil
+itating computer supported collaborative work (CSCW) in a seamless manner. AR interfaces are very conducive to real world collaboration because the groupware 
+support can be kept simple and left mostly to social protocols. Benford [9] classifies these collaborative interfaces 
+along two dimensions of Artificiality and Transportation. Transportation is the degree to which users leave their local space and enter into a remote space, and Artificiality the degree to which a space is synthetic or 
+removed from the physical world. Fig. 2 shows the classification of typical collaborative interfaces. As can be seen, Milgrams continuum can be viewed as the 
+equivalent of Benfords Artificiality dimension. Again, most collaborative interfaces exist at a discrete location in this twodimensional taxonomy. 
+However, human activity often cannot be broken into discrete components and for many tasks users may prefer to be able to easily switch between interfaces types, or colocated and remote collaboration. This is 
+particularly true when viewing and interacting with threedimensional (3D) graphical content. For example, even when using a traditional desktop modeling inter
+face users will turn aside from the computer screen to sketch with pencil and paper. As Kiyokawa et al. point out, AR and immersive VR are complimentary and the 
+type of interface should be chosen according to the nature of the task [10,11]. For example, if collaborators 
+want to experience a virtual environment from different viewpoints or scale then immersive VR may be the best 
+choice. However, if the collaborators want to have a facetoface discussion while viewing the virtual image an AR interface may be best. Similarly, in a collabora
+tive session users may often want to switch between talking with their remote collaborators, and the people sitting next to them in the same location. Given that different degrees of immersion may be useful for 
+different tasks and types of collaboration; an important question is how to support seamless transitions between the classification spaces. 
+Several researchers have conducted work in this area. Kiyokawa et al. [11,12] explored the seamless transition between an AR and immersive VR experience. They 
+developed a twoperson shared AR interface for facetoface computeraided design, but users could also change their body scale and experience the virtual world 
+immersively. Once users began to decrease or increase their body size the interface would transition them into an immersive environment. This ability of users to fly into miniature virtual worlds and experience them 
+immersively was previously explored by Stoakley et al. in the Worlds in Miniature (WIM) work [13]. They used miniature worlds to help users navigate and interact 
+with immersive virtual environments at fullscale. The WIM interface explored the use of multiple perspectives in a single user VR interface, while the CALVIN work 
+of Leigh et al. [14] introduced multiple perspectives in a collaborative VR environment. In CALVIN, users could either beMortals or Deities and view the VR world from either an egocentric or exocentric view, respectively. 
+CALVIN supported multiscale collaborative between participants so that deities would appear like giants to mortals and vice versa. 
+The MagicBook interface builds on this earlier work and explores how a physical object can be used to smoothly transport users between Reality and Virtual
+ity, or between colocated and remote collaboration. It supports transitions along the entire RealityVirtuality continuum, not just within the medium of immersive 
+VR, and so cannot be placed as a discrete point on a taxonomy scale. In the remainder of this article we describe the MagicBook interface in more detail, the technology involved, initial user reaction and potential 
+main interface object. People can turn the pages of these books, look at the pictures, and read the text without any additional technology (Fig. 3a). However, if they 
+look at the book through an AR display they see 3D virtual models appearing out of the pages (Fig. 3b). The 
+models appear attached to the real page so users can see the AR scene from any perspective simply by moving themselves or the book. The models can be of 
+any size and are also animated, so the AR view is an enhanced version of a traditional 3D popup book. Users can change the virtual models simply by turning 
+the book pages and when they see a scene they particularly like, they can fly into the page and experience it as an immersive virtual environment 
+(Fig. 3c). In the VR view they are free to move about the scene at will and interact with the characters in the story. Thus, users can experience the full Reality Virtuality continuum. 
+1. The MagicBook removes the discontinuity that has traditionally existed between the real and virtual worlds. VR is a very intuitive environment for 
+viewing and interacting with computer graphics content, but in a head mounted display (HMD) a person is separated from the real world and their 
+so they can select the viewpoint appropriate for the task at hand. For example, an AR viewpoint (exocentric view) may be perfect for viewing and talking about a model, but immersive VR (egocentric 
+interact with graphical content as easily as reading a book. This is because the MagicBook interface metaphors are consistent with the form of the 
+physical objects used. Turning a book page to change virtual scenes is as natural as rotating the page to see 
+a different side of the virtual models. Holding up the AR display to the face to see an enhanced view is similar to using reading glasses or a magnifying lens. 
+Rather than using a mouse and keyboard based interface, users manipulate virtual models using real physical objects and natural motions. Although the 
+experiences have different advantages and disadvantages for supporting collaboration. As shown by Benfords classification, there has been a proliferation of collaborative interfaces, but it has traditionally been difficult 
+to move between the shared spaces they create. For example, users in an immersive virtual environment are separated from the physical world and cannot collabo
+rate with users in the real environment. The MagicBook supports all these types of interfaces and lets the user move smoothly between them depending on the task at 
+interface can be used by multiple people at once. Several readers can look at the same book and share the story together (Fig. 4a). If these people then pick up their AR displays they will each see the virtual models super
+imposed over the book pages from their own viewpoint. Since they can see each other and the real world at the same time as the virtual models, they can easily 
+communicate using normal facetoface communication cues. All the users using the MagicBook interface have their own independent view of the content so any 
+number of people can view and interact with a virtual model as easily as they could with a real object (Fig. 4b). 
+In this way the MagicBook technology moves virtual content from the screen into the real world, preserving the cues used in normal facetoface conversation, and providing a more intuitive technology for collabora
+virtual characters in the story (Fig. 5a). More interestingly, there may be situations where one or more users are immersed in the virtual world, while others are 
+viewing the content as an AR scene. In this case the AR user will see an exocentric view of a miniature figure of the immersed user, moving as they move themselves 
+about the immersive world (Fig. 5b). Naturally, in the immersive world, users viewing the AR scene appear as large virtual heads looking down from the sky. When users in the real world move, their virtual avatars move 
+accordingly. In this way people are always aware of where the other users of the interface are located and where their attention is focused. 
+* As an AR Object: Users with AR displays can see virtual objects appearing on the pages of the book. 
+* As an Immersive Virtual Space: Users can fly into the virtual space together and see each other represented as virtual avatars in the story space. 
+The interface also supports collaboration on multiple scales. Users can fly inside the virtual scenes (an 
+egocentric view) and see each other as virtual characters. A nonimmersed user will also see the immersed users as small virtual characters on the book pages (an exocentric view). This means that a group of collaborators 
+can share both egocentric and exocentric views of the same game or data set, leading to enhanced understanding. 
+The MagicBook interface has three main components; a hand held AR display (HHD), a computer, and one or more physical books. The books look like any normal 
+book and have no embedded technology, while the display is designed to be easily held in one hand and to be as unencumbering as possible (Fig. 6). 
+Each user has their own hand held display and computer to generate an individual view of the scenes. These computers are networked together for exchanging 
+information about avatar positions and the virtual scene each user is viewing. The HHD is a handle with a Sony 
+Glasstron PLMA35 display mounted at the top, an InterSense InterTrax [15] inertial tracker at the bottom, a small color video camera on the front, and a switch and pressure pad embedded in the handle. The PLM
+A35 is a low cost bioccular display with two LCD panels of 260 230 pixel resolution. The camera output is connected to the computer 
+graphics workstation; computer graphics are overlaid on video of the real world and resultant composite image shown back in the Glasstron display. In this way users 
+experience the real world as a videomediated reality. One advantage of this is that the video frames that are being seen in the display are exactly the same frames as those drawn on by the graphics software. This means 
+that the registration between the real and virtual objects appears almost perfect because there is no apparent lag in the system. The video of the real world is actually 
+delayed until the system has completed rendering the 3D graphics. On a mid range PC (866MHz Pentium III) with a virtual scene of less than 10,000 polygons we can 
+maintain a refresh rate of 30 frames per second. This is fast enough that users perceive very little delay in the video of the real world and the virtual objects appear 
+the Opera glass form factor of the hand held display was deliberately designed to encourage seamless transis
+tion between Reality and Virtual Reality. Users can look through the display to see AR and VR content, but can instantaneously return to viewing the real world simply 
+by moving the display from in front of their eyes. The hand held display is far less obtrusive and easy to remove than any head worn display, encouraging people 
+to freely transition along the RealityVirtuality continuum. It is also easy to share, enabling several people to try a single display unit and see the same content. The books used in the MagicBook interface are 
+Certain pictures have thick black borders surrounding them and are used as tracking marks for a computer vision based head tracking system. When the reader looks at these pictures through the HHD, computer 
+vision techniques are used to precisely calculate the camera position and orientation relative to the tracking mark. The head tracking uses the ARToolKit tracking 
+library, a freely available opensource software package, which we have written for developing vision based AR applications [16]. Fig. 7 summarizes how the ARToolKit 
+tracking library works. Once the users head position is known the workstation generates virtual images that appear precisely registered with the real pages. Our use of 2D markers for AR tracking is similar to the 
+CyberCode work presented by Rekimoto [17] and other vision based tracking systems. When the users see an AR scene they wish to explore, 
+flicking the switch on the handle will fly them smoothly into the scene, transitioning them into the immersive VR environment. In the VR scene, users can no longer see 
+the real world and so the head tracking is changed from the computer vision module to the InterTrax inertial orientation tracker. The output from the InterTrax 
+inertial compass is used to set the head orientation in the virtual scene. The InterTrax provides threedegrees of freedom orientation information with a high accuracy and very little latency. Readers can look around the 
+scene in any direction and by pushing the pressure pad on the handle they can fly in the direction they are looking. The harder they push the faster they fly. To 
+return to the real world users simply need to flick the switch again. The pressure pad and switch are both connected to a TNG interface box [18] that converts 
+their output to a single RS232 serial data signal. The MagicBook application is also a clientserver 
+networked application. Each of the user computers are networked together for exchanging information about 
+environment or are viewing the AR scenes, their position and orientation are broadcast using TCP/IP code to a central server application. The server application then rebroadcasts this information to each of the networked 
+computers and the MagicBook graphical client code. This is used to place virtual avatars of people that are viewing the same scene, so users can collaboratively 
+explore the virtual content. Since each of the client applications contain a complete copy of the graphics code, only a very small amount of position information 
+needs to be exchanged. Thus MagicBook applications can potentially support dozens of users. There is also no need for users to be physically colocated. The virtual avatars can be controlled by users in the same location 
+or remote from each other. So the MagicBook technology supports both facetoface and remote collaboration. 
+To encourage exploration in a number of different application areas we have developed the MagicBook as a generic platform that can be used to show almost any 
+VRML content. VRML is a standard file format for 3D computer graphics. We use an open source VRML rendering library called libVRML97 [19] that is based on 
+the OpenGL lowlevel graphics library. Since VRML is exported by most 3D modeling packages, it is very easy for content developers to build their own MagicBook applications. Once the 3D content has been developed, it 
+is simple to make the physical book pages and the configuration files to load the correct content. This ease of development has resulted in the produc
+tion of nearly a dozen books in a variety of application domains. Among others, we have a Japanese childrens story that involves the reader in a treasure hunt, a 
+version of the Humpty Dumpty tale, a World War One History book, and a science fiction snowboard experi
+applications explore new literary ground where the reader can actually become part of the story and where the author must consider issues of interactivity and immersion. 
+The MagicBook technology has also strong application potential for scientific visualization. We have begun exploring using this technology for viewing geospatial 
+models. Fig. 8 shows views of typical oilfield seismic data superimposed over a tracking card. Currently, petroleum companies deploy expensive projection screen 
+based visualization centers around the world. The tracking systems used in the MagicBook interface are completely sourceless and so potentially mobile. In the near future it will be possible to run the MagicBook 
+software from a laptop computer and so support a radically new way of presenting visualization data in a field. 
+One of the more interesting applications we have developed is an educational textbook designed to teach architects how to build Gerrit Rietvelds famous Red 
+and Blue Chair (Fig. 9). After a brief introduction to Rietvelds philosophy and construction techniques, the readers are treated to a stepbystep instruction guide to 
+building the chair. On each page is a 2D picture of the current stage of the chair construction. When readers look at this page in their hand held displays, they see a 3D model of the partially completed chair popping out 
+of page. On the final page they see a virtual model of the completed chair that they can fly into and see lifesized. Being able to see the chair from any angle during the 
+Siggraph 2000 conference where over 2500 people tried the books in the course of a week. Siggraph is a 
+experience because attendees typically have only few minutes and need to be able to master the technology immediately. Although we did not have time for a rigorous user study, 54 of these people filled 
+out a simple survey and were interviewed about their experience. Feedback was very positive. People were able to use 
+the interface with minimal training, they enjoyed the hand held displays, being able to view different AR scenes, and fly into the immersive VR worlds. Users 
+felt that the interface was easy and ituitive to use. They were given two questions Q1: How easily could you move between the real and virtual worlds?, and Q2: How easy was it to collaborate with others?, and asked 
+responses while Figs. 10 and 11 show the complete data sets. Using a two tailed studentsttest we found that the 
+the expected mean of 4.0 (t 14:43; df=53, po0:001). This shows that users overwelmingly felt that they could easily transition between the real and virtual worlds. 
+However, with question two the user responses were signficantly less than the expected mean (t 2:77; df=53, po0:01), showing they thought it was not as 
+easy to collaborate with each other. This was probably due to some of the people trying the books by themselves, or when using it with another person not being aware of the avatars in the scene. In order for 
+Although users felt that they could easily transition between the real and virtual worlds there were also a number of shortcoming with the interface that they 
+identified. Many people found it frustrating that they could not move backwards in the virtual worlds. We modeled movement in the immersive world after move
+ment in the real world and assumed that users would rarely want to move backwards, since people rarely walk backwards. However, it seems that users expected more 
+of a video game metaphor and a majority of people immersed in the VR scenes asked how they could fly 
+Users also thought the realism and complexity of the graphics content could be improved. The ability to render and display complex scenes is a function of both 
+the graphics cards that we were using and the hand held display properties. The current trend for rapid improvement in both graphics card performance and head mounted display resolution should remove this concern. 
+Interactivity is also limited in the current generation of the MagicBook. It is a compelling experience to be able to view and fly inside virtual scenes, but many 
+applications require interaction with the virtual content that goes beyond simple navigation. For example, in architecture application users should be able to select 
+and layout virtual furniture in the scenes that they are exploring. We are currently developing new metaphors based on tangible interaction techniques that could be 
+tracking by the computer vision based tracking system. If users happened to occlude part of the tracking pattern 
+then the AR content would abruptly disappear. Recently, we have developed a multimarker tracking method that uses sets of patterns [10]. Users can cover 
+up one or more of these patterns without halting the AR tracking. We are in the process of incorporating this approach into the next generation of MagicBook 
+conducted to investigate how collaboration in this seamless interface differs from collaboration with more 
+traditional interfaces. We need to explore how this interface affects communication and collaboration patterns and whether it forces users to change the way 
+they would normally interact in a facetoface setting. There are also unanswered questions in terms of what interface tools are needed to support multiscale 
+collaboration, and how to incorporate both facetoface and remote collaborators. Our preliminary user feedback indicates that more explicit collaboration cues may 
+be required for users to be aware of their collaborators when immersed in the virtual scenes or viewing AR content. 
+As computers become more ubiquitous and invisible there is a need for new interfaces that blur the line between Reality and VR. This can only be achieved by 
+the use of Mixed Reality interfaces that span the RealityVirtuality continuum. The MagicBook is an early attempt at a transitional Mixed Reality interface 
+for viewing and interacting with spatial datasets. The MagicBook allows users to move between Reality and 
+Virtual Reality at the flick of a switch and supports collaboration on multiple levels. Although the Magic
+Book facilitates viewing of sophisticated computer graphics content, the computer is invisible. Rather than using a mouse or keyboard, interaction is focused 
+around a real book and a tangible interface that makes it very intuitive. Initial user feedback has been very positive and even 
+become part of the virtual scenes. However, we are continuing to improve the interface. In the future we plan on exploring more intuitive ways for users to 
+navigate through and interact with the virtual models. We are also working on ways of integrating the MagicBook approach into an environment with projec
+tive displays and so allow seamless transition between 2D and 3D views of a data set in a traditional office setting. 
+For more information about the MagicBook project and to download a free version of the ARToolKit software please visit http://www.hitl.washington.edu/ magicbook/. 
+their continued support, Keiko Nakao, Susan Campbell, and Dace Campbell for making the models and books shown, and Dr. Tom Furness III for creating a stimulating environment to work in. 

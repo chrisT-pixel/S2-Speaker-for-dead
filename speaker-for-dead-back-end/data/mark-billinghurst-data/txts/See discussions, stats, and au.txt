@@ -1,0 +1,20 @@
+See discussions, stats, and author profiles for this publication at: https://www.researchgate.net/publication/220106905 
+Article in International Journal of HumanComputer Studies May 2008 DOI: 10.1016/j.ijhcs.2007.11.001 Source: DBLP 
+All content following this page was uploaded by Mark Billinghurst on 08 January 2017. The user has requested enhancement of the downloaded file. All intext references underlined in blue are added to the original document and are linked to publications on ResearchGate, letting you access and read them immediately.
+aHuman Interface Technology Laboratory New Zealand, University of Canterbury, Private Bag 4800, Christchurch, New Zealand bFaculty of Electrical Engineering, University of Ljubljana, Trzaska 25, Ljubljana, Slovenia 
+cFaculty of Mathematics and Natural Sciences II, Department of Psychology, Humboldt University, Chair of Engineering Psychology/Cognitive Ergonomics, 
+This paper describes a user study on interaction with a mobile device installed in a driving simulator. Two new auditory interfaces were 
+proposed and their effectiveness and efficiency were compared to a standard visual interface. Both auditory interfaces consisted of 
+spatialized auditory cues representing individual items in the hierarchical structure of the menu. In the first auditory interface all items of 
+the current level of the menu were played simultaneously. In the second auditory interface only one item was played at a time. The visual 
+interface was shown on a small invehicle LCD screen on the dashboard. In all three cases, a custommade interaction device (a scrolling 
+wheel and two buttons) attached to the steering wheel was used for controlling the interface. The driving performance, task completion 
+times, perceived workload and overall user satisfaction were evaluated. The experiment proved that both auditory interfaces were 
+effective to use in a mobile environment, but were not faster than the visual interface. In the case of shorter tasks, e.g. changing the active 
+profile or deleting an image, the task completion times were comparable for all interfaces; however, both the driving performance was 
+significantly better and the perceived workload was lower when using the auditory interfaces. The test subjects also reported a high 
+overall satisfaction with the auditory interfaces. The latter were labelled as easier to use, more satisfying and more adequate for 
+performing the required tasks than the visual interface. The results of the survey are not surprising as there is a stronger competition for 
+the visual attention between the visual interface and the primary task (driving the car) than in the case of using the auditory interface. So 
+although both types of interfaces were proven to be effective, the visual interface was less efficient as it strongly distracted the user from 
+Keywords: Visual interface; Auditory interface; Spatial sound; Driving simulator; Mobile device; Interaction; Distraction 

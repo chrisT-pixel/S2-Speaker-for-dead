@@ -1,0 +1,2 @@
+1Faculty of Information Sciences, Hiroshima City University 2Human Interface Technology Laboratory, University of Washington 
+Figure 8 shows coordinates frames in our calibration Figure 7. Layout of markers on the Shared White Board. 
