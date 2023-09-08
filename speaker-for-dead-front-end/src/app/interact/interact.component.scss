@@ -1,4 +1,43 @@
+$blue: #0052a0;
+$charcoal: #36454f;
+
 .interact-wrapper{
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
+h2{
+    text-align: center;
+    color: $blue;
+}
+
+button{
+    background-color: $blue;
+    color: white;
+    border: 1px solid $blue;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    &:hover{
+        color: $blue;
+        background-color: white;
+        border: 1px solid $blue;
+    }
+}
+button[disabled]{
+    opacity: 0.2;
+    &:hover{
+        cursor: not-allowed;
+    }
+}
+
+input{
+    height: 40px;
+    width: 250px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    &:focus{
+        border: 1px solid $blue;
+    }
+}
+

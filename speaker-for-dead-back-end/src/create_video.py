@@ -3,6 +3,7 @@ import requests
 import replicate
 from os import path
 from pydub import AudioSegment
+import math
 
 
 def get_most_recent_audio_as_mpeg():
@@ -81,13 +82,50 @@ def generate_talking_response_sad_face():
     )
     print(output)
     return output
+
+def chop_audio_into_chunks():
+
+    # Input MP3 file path
+    input_file = "mark-speaking-long.mp3"
     
+    # Load the MP3 file
+    audio = AudioSegment.from_mp3(input_file)
+    
+    # Duration of each chunk in milliseconds (60 seconds)
+    chunk_duration = 60 * 1000
+    
+    # Calculate the total number of chunks needed
+    total_chunks = math.ceil(len(audio) / chunk_duration)
+    
+    # Output directory for the chunks
+    output_directory = "audio_chunks/"
+    
+    # Iterate through the chunks
+    for i in range(total_chunks):
+        start_time = i * chunk_duration
+        end_time = (i + 1) * chunk_duration
+    
+        # Extract the chunk
+        chunk = audio[start_time:end_time]
+    
+        # Save the chunk to an output file
+        output_file = f"{output_directory}chunk_{i+1}.mp3"
+        chunk.export(output_file, format="mp3")
+    
+    print("MP3 file chopped into one-minute chunks.")
+    
+url = "https://api.elevenlabs.io/v1/voices"
 
-#get_most_recent_audio_as_mpeg()
-#convert_mpeg_to_wav()
-#generate_talking_response_make_it_talk()
-#generate_talking_response_sad_face()
+def printAvailableVoiceDetails():
 
+    headers = {
+      "Accept": "application/json",
+      "xi-api-key": eleven_labs_api_key
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    print(response.text)
 
 
 

@@ -366,6 +366,7 @@ class SpeakerForTheDead:
             pass
     
         response_text = response["choices"][0]["text"].strip()
+        #output_message = f'{response["choices"][0]["text"].strip()}'
         words = re.findall(r'\w+', response_text)
         output_chunks = []
     
@@ -394,6 +395,8 @@ class SpeakerForTheDead:
         response_tokens = len(tokenizer.encode(response_text))
         self.convo_history_tokens.append(response_tokens)
         self.current_tokens += response_tokens
+        
+        #return output_message
 
 
 
