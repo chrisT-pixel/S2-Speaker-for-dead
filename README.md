@@ -1,0 +1,7 @@
+The goal of this project is to explore the feasibility of creating a digital character that looks and sounds like a real person using image and voice recordings, and previous writings of that person. Over the last several years significant advances in AI, and technologies like ChatGPT and Jaspar, have enabled the ability to create conversational characters. In this project we will explore if we can create a character that acts like a living person by training the character with existing material that the person has created. It is also possible to create realistic looking virtual avatars from several photos, and create recordings that sound like real people using short voice samples. This project will combine these various existing elements together to create a virtual character that looks and sounds like a real person, and has the knowledge of the person. So a person should be able to ask questions of the digital character and get a realistic response from them. The students will create a prototype and then run a small pilot study to see how realistic people think the character is. The final prototype could be experienced in an Augmented Reality or Virtual Reality experience, or on a mobile phone, or desktop interface.
+
+Custom clones can be trained with an image, .txt with domain info, and an mp3 voice recording 
+
+This project was generated with Angular CLI version 15.1.4 and Python 3.9
+
+API's used include OpenAI, ElevenLabs.io and Replicate

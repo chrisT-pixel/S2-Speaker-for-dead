@@ -1,0 +1,19 @@
+
+    <div class="modal-header">
+        <h5 class="modal-title">{{ item.clone_name }}</h5>
+    </div>
+    <div class="modal-body">
+        <p>Clone Name: {{ item.clone_name }}</p>
+        <p>Voice ID: {{ item.voice_id }}</p>
+        <video [src]="currentVideo" #customCloneVideoElement autoplay loop></video>
+        <input type="text" [(ngModel)]="textToSend" placeholder="Enter your prompt">
+        
+        <button (click)="sendAndReceiveText(item.clone_name, item.voice_id)">
+            Submit to {{ item.clone_name }} Clone
+        </button>
+      
+    </div>
+    <div class="modal-footer">
+       
+    </div>
+

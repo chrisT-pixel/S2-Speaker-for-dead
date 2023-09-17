@@ -1,33 +1,74 @@
+<button (click)="toggleFlip()" class="cloneTypeButton">Toggle Features (Mark Billinghurst or Create New Clone Attributes) <mat-icon>swap_vert</mat-icon></button>
 <div class="interact-wrapper">
-    <h2>Current Clone Type: {{ isVideoClone ? 'Video Clone With Lip syncing' : 'Low Latency Clone: No Lip syncing' }}</h2>
-    <button [disabled]="isCloneTypeButtonDisabled" (click)="toggleCloneType()">Toggle Clone Type</button>
     
-    <br />
-    <input type="text" [(ngModel)]="textToSend" placeholder="Enter your prompt">
-
-    <button (click)="isVideoClone ? sendAndReceiveTextVideo() : sendAndReceiveText()">
-        {{ isVideoClone ? 'Submit to video clone' : 'Submit to audio clone' }}
-    </button>
-    
-    <p *ngIf="responseText">Answer: {{ responseText }}</p>
-
-    <div *ngIf="!isVideoClone">
-        <div>
-            <video width="100%" height="320" #lowLatencyElement autoplay loop poster="../assets/images/mark-animated.gif">
-                <source [src]="responseVideo" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+    <div class="tp-box" [@flipState]="flip">
+        <div class="tp-box__side tp-box__front">
+            <h2>Current Clone Type: {{ isVideoClone ? 'Mark Billinghurst Video Clone With Lip syncing' : 'Mark Billinghurst Low Latency Clone: No Lip syncing' }}</h2>
+            <button [disabled]="isCloneTypeButtonDisabled" (click)="toggleCloneType()">Toggle Clone Type</button>
+            
+            <br />
+            <input type="text" [(ngModel)]="textToSend" placeholder="Enter your prompt">
+            
+            <button (click)="isVideoClone ? sendAndReceiveTextVideo() : sendAndReceiveText()">
+                {{ isVideoClone ? 'Submit to video clone' : 'Submit to audio clone' }} 
+            </button>
+            
+            <p *ngIf="responseText">Answer: {{ responseText }}</p>
+            
+            <div *ngIf="!isVideoClone">
+                <div>
+                    <video width="100%" height="320" #lowLatencyElement autoplay loop poster="../assets/images/mark-animated.gif">
+                        <source [src]="responseVideo" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            
+            <div *ngIf="isVideoClone">
+                <div>
+                    <p><mat-icon>warning</mat-icon> Note the time required to generate lip synced videos varies due to budgetary limitations in GPU power
+                        available.</p>
+                </div>
+                <div *ngIf="videoIsGenerating" class="VideoGeneratingAlert">
+                    <p>Lip synced video is generating! Please Wait!</p>
+                </div>
+                <div>
+                    <video width="100%" height="320" #videoElement autoplay poster="../assets/images/mark-animated.gif">
+                        <source [src]="responseVideo" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            
+            </div>
+        </div>
+        <div class="tp-box__side tp-box__back">
+            <h2>Create New Clone Attributes</h2>
+            <div *ngIf="voiceTrainedSuccessfully" class="itemTrainedAlert">
+                <p>Clone voice & info trained successfully!</p>
+            </div>
+            <div *ngIf="voiceTrainedSuccessfully && !videosTrainedSuccessfully" class="videoTrainingAlert">
+                <p>Commencing video training! This may take several minutes...</p>
+            </div>
+            <div *ngIf="videosTrainedSuccessfully" class="itemTrainedAlert">
+                <p>Videos trained successfully!</p>
+            </div>
+            <p>Step 1: Add clone name (first name only)</p>
+            <input type="text" [(ngModel)]="audioName" (change)="onNameSelected($event)" #audioNameInput placeholder="Enter Clone Name">
+            <p>Step 2: Add audio file of clone voice (recommended 3 - 5 minutes)</p>
+            <input type="file" #audioFileInput (change)="onAudioFileSelected($event)" accept=".mp3">
+            <br />
+            <p>Step 3: Add image file of clone (recommended square 256 * 256 px)</p>
+            <input type="file" #imageFileInput (change)="onImageFileSelected($event)" accept="image/*">
+            <br />
+            <p>Step 4: Add text tile with as much information about your clone as possible (in .txt format)</p>
+            <input type="file" #contextFileInput (change)="onContextFileSelected($event)" accept=".txt">
+            <br />
+            <button (click)="addVoiceAndImage()" [disabled]="!audioName || !audioFileSelected || !imageFileSelected">Upload Voice and Image File</button>
+            <br />
+            <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
         </div>
     </div>
-   
-    <div *ngIf="isVideoClone">
-        <div>
-            <video width="100%" height="320" #videoElement autoplay poster="../assets/images/mark-animated.gif">
-                <source [src]="responseVideo" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-        
-    </div>
+
+
 
 </div>

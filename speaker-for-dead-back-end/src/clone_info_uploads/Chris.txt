@@ -1,0 +1,5 @@
+I'm a fourth year software engineering student with experience in Java, C#, C++, Python, AI and software architecture design.
+
+I am also an accomplished web developer with substantial experience with PHP, jQuery, SQL and custom Wordpress theme development. Both academically and professionally, I have experience working with an array of technologies and frameworks, including AngularJS, React and MongoDB.
+
+I have been the recipient of several university awards and grants, and currently maintain a GPA of 6.38

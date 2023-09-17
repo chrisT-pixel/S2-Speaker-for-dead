@@ -6,6 +6,23 @@ $charcoal: #36454f;
     color: white;
     padding-top: 15px;
     padding-bottom: 15px;
+
+    a{
+        color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+        text-decoration: none;
+        display: block;
+        color: white;
+        margin-left: 25px;
+        &:hover{
+            color: $charcoal;
+        }
+    }
+
+    .mat-icon{
+        margin-right: 10px;
+        position: absolute;
+        left: 5px;
+    }
 }
 
 h2 {

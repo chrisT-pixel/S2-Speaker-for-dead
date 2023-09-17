@@ -1,6 +1,10 @@
 <div class="header">
+   
     <div class="container-fluid">
         <!-- logo in SVG format -->
+        <a routerLink="/"><mat-icon aria-hidden="false" aria-label="home icon" fontIcon="home"></mat-icon> Home</a>
+        <a routerLink="/custom-clones"><mat-icon aria-hidden="false" aria-label="clones icon" fontIcon="face"></mat-icon>Custom Clones</a>
+
         <svg id="BXHRTWRkr" viewBox="0 0 370.11111111111114 38.888888888888886" height="38.888888888888886"
             width="370.11111111111114"
             style="width: 370.111px; height: 38.8889px; position: absolute; top: 50px; left: 50%; z-index: 0; cursor: pointer; transform: translate(-50%, -50%) scale(1.02564);">
@@ -39,7 +43,10 @@
 </div>
 
 <div class="container">
-    <app-interact></app-interact>
+    <!--<app-interact></app-interact>-->
+    <div *ngIf="isHomePage">
+        <app-interact></app-interact>
+    </div>
     <router-outlet></router-outlet>
 </div>
 

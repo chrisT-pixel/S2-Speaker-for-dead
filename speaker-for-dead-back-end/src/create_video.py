@@ -83,6 +83,62 @@ def generate_talking_response_sad_face():
     print(output)
     return output
 
+
+def generate_videos_for_custom_clones(path_to_file, name):
+    
+    outputIdle = replicate.run(
+    
+        "wyhsirius/lia:4ce4e4aff5bd28c6958b1e3e7628ea80718be56672d92ea8039039a3a152e67d",
+    input={"img_source": open(path_to_file, "rb"),
+           "driving_video": open("training_videos/idle.mp4", "rb")
+           }
+    )
+    
+    print(outputIdle)
+    
+    outputTalking = replicate.run(
+    
+        "wyhsirius/lia:4ce4e4aff5bd28c6958b1e3e7628ea80718be56672d92ea8039039a3a152e67d",
+    input={"img_source": open(path_to_file, "rb"),
+           "driving_video": open("training_videos/talking.mov", "rb")
+           }
+    )
+    
+    print(outputTalking)
+    
+    local_idle_path = f"custom_clone_videos/{name}_idle.mp4"
+    local_talking_path = f"custom_clone_videos/{name}_talking.mp4"
+    
+    downloadVideoFromReplicate(outputIdle, local_idle_path)
+    downloadVideoFromReplicate(outputTalking, local_talking_path)
+    
+    return local_idle_path, local_talking_path
+    
+
+def downloadVideoFromReplicate(video_url, local_file_path):
+    try:
+        # Send an HTTP GET request to the video URL
+        response = requests.get(video_url, stream=True)
+    
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            # Open a local file for binary write
+            with open(local_file_path, "wb") as file:
+                # Iterate through the content in chunks and write to the file
+                for chunk in response.iter_content(chunk_size=1024):
+                    if chunk:
+                        file.write(chunk)
+    
+            print(f"Video downloaded and saved to {local_file_path}")
+        else:
+            print(f"Failed to download video. Status code: {response.status_code}")
+    
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+    
+    
+
+
 def chop_audio_into_chunks():
 
     # Input MP3 file path
