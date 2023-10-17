@@ -1,0 +1,13 @@
+<div class="voice-recorder-wrapper">
+    <div class="row">
+        <div class="col-sm-6">
+            <button (click)="initiateRecording()" *ngIf="!recording"> Start Recording </button>
+            <button (click)="stopRecording()" *ngIf="recording"> Stop Recording </button>
+        </div>
+        <div class="col-sm-6">
+            <audio controls="" *ngIf="fileUrl">
+                <source [src]="sanitize(fileUrl)" type="audio/mp3">
+            </audio>
+        </div>
+    </div>
+</div>

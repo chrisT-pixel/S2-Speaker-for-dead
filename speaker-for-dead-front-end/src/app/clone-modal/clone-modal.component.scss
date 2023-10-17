@@ -1,0 +1,47 @@
+$blue: #0052a0;
+$charcoal: #36454f;
+
+.modal-header{
+    background-color: $blue;
+    color: white;
+}
+
+.toggleChat{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 50px;
+    padding-bottom: 5px;
+}
+
+.modal-body{
+
+    video{
+        margin-bottom: 40px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    input{
+        height: 40px;
+    }
+
+   
+
+}
+
+.modal-footer{
+    p {
+            font-weight: bold;
+            text-align: center;
+        }
+}
+
+.alertDiv{
+    text-align: center;
+    background-color: $charcoal;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 17px;
+}

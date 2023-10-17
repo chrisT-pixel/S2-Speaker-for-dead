@@ -3,12 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { fadeAnimation } from '../animations';
+
 
 @Component({
   selector: 'app-interact',
   templateUrl: './interact.component.html',
   styleUrls: ['./interact.component.scss'],
   animations: [
+    fadeAnimation,
     trigger('flipState', [
       state('active', style({
         transform: 'rotateY(179deg)'
@@ -51,6 +54,16 @@ export class InteractComponent implements OnInit {
   audioFileSelected = false;
   imageFileSelected = false;
   contextFileSelected = false;
+  cloneTraining: boolean = false;
+  receivedAudioFileUrl: string = '';
+  receivedImageFileUrl: string = '';
+  imageBlob: any = null;
+  imageIsBlob = false;
+  imageIsUpload = false;
+  contextData: string = '';
+  buttonText: string = 'Use Device Features to Create Clone';
+  showUploadsCreateClone: boolean = true;
+  showUseDeviceCreateClone: boolean = false;
 
   constructor(private http: HttpClient, private cdRef: ChangeDetectorRef, private socket: Socket) {}
 
@@ -92,6 +105,13 @@ export class InteractComponent implements OnInit {
 
   //MARK BILLINGHURST CLONE METHODS 
 
+  //front end toggle for desired creation method
+  toggleCreateTypeVisibility() {
+    this.showUseDeviceCreateClone = !this.showUseDeviceCreateClone;
+    this.buttonText = this.showUseDeviceCreateClone ? 'Upload Materials to Create Clone' : 'Use Device Features to Create Clone';
+
+}
+
   // Method to seek to the beginning, load, and optionally play the element
   seekLoadAndPlay(element: ElementRef | undefined, playVideo: boolean = false): void {
     if (element && element.nativeElement instanceof HTMLVideoElement) {
@@ -129,6 +149,7 @@ export class InteractComponent implements OnInit {
   }
 
   sendAndReceiveTextVideo(): void {
+    
     this.videoIsGenerating = true;
     console.log("video is generating " + this.videoIsGenerating);
     this.isCloneTypeButtonDisabled = true;
@@ -157,17 +178,111 @@ export class InteractComponent implements OnInit {
     );
   }
 
+  createCloneUsingCustomItems(): void {
+    
+    this.cloneTraining = true;
+    this.imageIsBlob = true;
+    this.progressValue = 10;
+
+    fetch(this.receivedAudioFileUrl)
+      .then((response) => response.blob())
+      .then((audioBlob) => {
+        console.log(audioBlob);
+        if (audioBlob && (this.imageIsBlob)) {
+          const apiUrl = 'http://localhost:5000/api/train_clone';
+
+          // Create a FormData object to send the files as multi-part form data
+          const audioBlobFileName = this.audioName + "-recording.mp3";
+          const formData = new FormData();
+          formData.append('audioBlob', audioBlob, audioBlobFileName); //use the emitted audio blob and rename file
+          formData.append('name', this.audioName);
+          
+          if(this.imageIsBlob){
+            console.log("image is blob in fetch");
+            const imageBlobFileName = this.audioName + "-face.jpg";
+            formData.append('imageBlob', this.imageBlob, imageBlobFileName); // Use the emitted image blob and rename file
+          }
+          
+          //formData.append('contextFile', contextFile);
+          formData.append('contextFile', new Blob([this.contextData], { type: 'text/plain' }));
+
+          // Send the FormData object to the server
+          this.http.post(apiUrl, formData).subscribe(
+            (response) => {
+              console.log('Clone trained!', response);
+              this.cloneTraining = false;
+            },
+            (error) => {
+              console.error('Error occurred:', error);
+            }
+          );
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching Blob:', error);
+      });
+}
+
   //TRAIN CUSTOM VOICE METHODS 
+  /*addVoiceAndImage(): void {
 
-  addVoiceAndImage(): void {
+    this.cloneTraining = true;
+    //const audioFile = this.audioFileInput.nativeElement.files[0];
+    const imageFile = this.imageFileInput.nativeElement.files[0];
+    const contextFile = this.contextFileInput.nativeElement.files[0];
+    this.progressValue = 10;
 
+    fetch(this.receivedAudioFileUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+
+        if (blob && imageFile) {
+        
+          const apiUrl = 'http://localhost:5000/api/train_clone';
+
+          // Create a FormData object to send the file as a multi-part form data
+          const formData = new FormData();
+          const audioBlobFileName = this.audioName + "-recording.mp3";
+          formData.append('audioBlob', blob, audioBlobFileName);  
+          formData.append('name', this.audioName);
+          formData.append('imageFile', imageFile);
+          formData.append('contextFile', contextFile);
+
+          console.log(blob);
+          console.log(this.audioName);
+          console.log(imageFile);
+          console.log(contextFile);
+
+          // Send the FormData object to the server
+          this.http.post(apiUrl, formData).subscribe(
+            (response) => {
+              console.log('Clone trained!', response);
+              this.cloneTraining = false;
+            },
+            (error) => {
+              console.error('Error occurred:', error);
+            }
+          );
+    }
+
+    })
+    .catch((error) => {
+      console.error('Error fetching Blob:', error);
+    });
+    
+    
+  }*/
+
+  createCloneUsingUploads(): void {
+
+    this.cloneTraining = true;
     const audioFile = this.audioFileInput.nativeElement.files[0];
     const imageFile = this.imageFileInput.nativeElement.files[0];
     const contextFile = this.contextFileInput.nativeElement.files[0];
     this.progressValue = 10;
     
     if (audioFile && imageFile) {
-      const apiUrl = 'http://localhost:5000/api/train_clone';
+      const apiUrl = 'http://localhost:5000/api/train_clone_uploads_only';
 
       // Create a FormData object to send the file as a multi-part form data
       const formData = new FormData();
@@ -180,6 +295,7 @@ export class InteractComponent implements OnInit {
       this.http.post(apiUrl, formData).subscribe(
         (response) => {
           console.log('Clone trained!', response);
+          this.cloneTraining = false;
         },
         (error) => {
           console.error('Error occurred:', error);
@@ -187,6 +303,17 @@ export class InteractComponent implements OnInit {
       );
     }
 
+  }
+
+  //assign URL value of audio file from recorder component
+  handleAudioFileUrl(fileUrl: string) {
+    this.receivedAudioFileUrl = fileUrl;
+  }
+
+  // Store the image blob or process it as needed
+  handleImageBlob(imageBlob: Blob) {
+    this.imageBlob = imageBlob;
+    console.log(this.imageBlob);
   }
 
   //clone creation form validation methods

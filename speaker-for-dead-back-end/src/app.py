@@ -56,6 +56,7 @@ def get_clone_data():
     with open('clone_data.json', 'r') as json_file:
         for line in json_file:
             data.append(json.loads(line))
+            print(line)
     return jsonify(data)
 
 #this method is called from front end for custom clones
@@ -66,7 +67,6 @@ def send_and_receive_text_custom_clone():
     received_text = data.get('text', '')
     clone_name = data.get('name')
     custom_voice_id = data.get('customVoiceID')
-    print("VOICE " + custom_voice_id)
     
     global CustomCloneInstance  # Declare the variable as global
 
@@ -75,7 +75,9 @@ def send_and_receive_text_custom_clone():
         CustomCloneInstance = create_new_character(clone_name)
    
     # get response from OpenAI/vector DB
+    #POTENTIAL BUG - STOPPED WORKING UNTIL I SWITCHED CONVERSE WITH CONVERSE WITH CHUNKS
     response_text = CustomCloneInstance.converse_with_word_chunks_generator(received_text)
+    #response_text = CustomCloneInstance.converse(received_text)
     
     #interact with elevenlabs api
     audio = generate(
@@ -174,11 +176,11 @@ def send_and_receive_text_video():
         'response_video': response_video
         }
     
-    return jsonify(response_data)
+    return jsonify("response")
 
 #this method is called from front end to train a custom clone
-@app.route('/api/train_clone', methods=['POST'])
-def train_clone():
+@app.route('/api/train_clone_uploads_only', methods=['POST'])
+def train_clone_uploads_only():
     uploaded_audio_file = request.files['audioFile']
     uploaded_image_file = request.files['imageFile']
     uploaded_context_file = request.files['contextFile']
@@ -189,17 +191,105 @@ def train_clone():
         image_filename = secure_filename(uploaded_image_file.filename)
         voice_name = request.form['name']
         context_filename = secure_filename(voice_name + '.txt')
-        
+
         # Save the uploaded files to a specific directory
         uploaded_audio_file.save(f'audio_uploads/{audio_filename}')
         uploaded_image_file.save(f'image_uploads/{image_filename}')
         uploaded_context_file.save(f'clone_info_uploads/{context_filename}')
+
+        #create vector db embeddings for custom clone
+        create_new_character(voice_name)
+
+        #communicate with eleven labs api to train custom voice
+
+        url = "https://api.elevenlabs.io/v1/voices/add"
+
+        headers = {
+          "Accept": "application/json",
+          "xi-api-key": eleven_labs_api_key
+        }
+
+        data = {
+            'name': voice_name
+
+        }
+
+        files = [
+            ('files', (f'{audio_filename}', open(f'audio_uploads/{audio_filename}', 'rb'), 'audio/mpeg'))
+        ]
+
+        response = requests.post(url, headers=headers, data=data, files=files)
+        print(response.text)
+        response_data = json.loads(response.text)
+        voice_id = response_data.get('voice_id', '')
+
+        #emit message to front end that voice was trained
+        socketio.emit('voice_trained_successfully', {'message': 'voice_trained_successfully'})
+
+        #communicate with replicate api to create idle and talking videos
+        idle_path, talking_path = generate_videos_for_custom_clones(f'image_uploads/{image_filename}', voice_name)
+
+        #emit message to front end that voice was trained
+        socketio.emit('videos_trained_successfully', {'message': 'videos_trained_successfully'})
+
+        # Create a dictionary with the values you want to write to the JSON file
+        result_data = {
+            'clone_name': voice_name,
+            'voice_id': voice_id,
+            'idle_path': idle_path,
+            'talking_path': talking_path,
+            'image_path': f'image_uploads/{image_filename}'
+        }
+
+        # Append the dictionary as a new line in the JSON file
+        with open('clone_data.json', 'a') as json_file:
+            json.dump(result_data, json_file)
+            json_file.write('\n')  # Add a newline character to separate entries
+
+        return jsonify({'message': 'Clone trained successfully'})
+
+    return jsonify({'message': 'No file uploaded'})
+
+#this method is called from front end to train a custom clone
+@app.route('/api/train_clone', methods=['POST'])
+def train_clone():
+    
+    uploaded_audio_file = request.files['audioBlob']
+    uploaded_image_file = request.files['imageBlob']
+    uploaded_context_file = request.files['contextFile']
+
+    if uploaded_audio_file and uploaded_image_file and uploaded_context_file:
+        # Ensure the filename is safe and secure
+        audio_filename = secure_filename(uploaded_audio_file.filename)
+        image_filename = secure_filename(uploaded_image_file.filename)
+        voice_name = request.form['name']
+        
+        context_content = uploaded_context_file.read()  # Read the content of the context file as text
+        # Define the file path and name for the context text file.
+        context_file_path = 'clone_info_uploads/'  # Modify this with the actual path.
+        context_filename = secure_filename(voice_name + '.txt')
+            
+        # Save the context content to a text file.
+        with open(f'{context_file_path}/{context_filename}', 'w') as file:
+            file.write(context_content.decode('utf-8'))  # Decode the bytes to a string before writing
+        
+        # Save the uploaded image with the secure filename
+        img_file_path = f'image_uploads/{image_filename}'
+        uploaded_image_file.save(img_file_path)
+        
+        cropUploadedImage(img_file_path)
+            
+        # Save the other uploaded files to a specific directory
+        uploaded_audio_file.save(f'audio_uploads/{audio_filename}')
+        #uploaded_context_file.save(f'clone_info_uploads/{context_filename}')
+        
         
         #create vector db embeddings for custom clone
+        #SHOULD REFACTOR THIS TO JUST SAVE TXT FILE AS TRAINING OCCURS WHEN CLONE IS 
+        #LAUNCHED ON FRONT END
         create_new_character(voice_name)
         
         #communicate with eleven labs api to train custom voice
-
         url = "https://api.elevenlabs.io/v1/voices/add"
 
         headers = {
@@ -237,6 +327,7 @@ def train_clone():
             'idle_path': idle_path,
             'talking_path': talking_path,
             'image_path': f'image_uploads/{image_filename}'
+            #'date_created': date_created
         }
 
         # Append the dictionary as a new line in the JSON file

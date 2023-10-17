@@ -318,7 +318,7 @@ class SpeakerForTheDead:
         self.current_tokens = len(tokenizer.encode(self.system_prompt))
         
     
-    #TODO: reduce current_convo to only contain two most queries and responses to reduce API costs 
+    
     def converse_with_word_chunks_generator(self, input_message: str, response_max_tokens: int = 500, chunk_size_words: int = 10, debug_context: bool = False, time_it: bool = False) -> Generator[str, None, None]:
         buffer_tokens = 100
     
@@ -397,6 +397,11 @@ class SpeakerForTheDead:
         self.current_tokens += response_tokens
         
         #return output_message
+        
+        
+
+    
+
 
 
 

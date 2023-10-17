@@ -1,19 +1,26 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{ item.clone_name }}</h5>
+</div>
+<div class="modal-body">
+    <div class="alertDiv">{{alertLabel}}</div>
+    
+    <video [src]="currentVideo" #customCloneVideoElement autoplay loop></video>
 
-    <div class="modal-header">
-        <h5 class="modal-title">{{ item.clone_name }}</h5>
-    </div>
-    <div class="modal-body">
-        <p>Clone Name: {{ item.clone_name }}</p>
-        <p>Voice ID: {{ item.voice_id }}</p>
-        <video [src]="currentVideo" #customCloneVideoElement autoplay loop></video>
+    <button class="toggleChat" (click)="toggleChatStyle()">{{ buttonLabel }} <mat-icon>compare_arrows</mat-icon></button>
+    
+    <div *ngIf="showTextChat" class="text-to-voice-chat-wrapper">
         <input type="text" [(ngModel)]="textToSend" placeholder="Enter your prompt">
-        
-        <button (click)="sendAndReceiveText(item.clone_name, item.voice_id)">
-            Submit to {{ item.clone_name }} Clone
-        </button>
-      
+        <button (click)="sendAndReceiveText(item.clone_name, item.voice_id)">Submit to {{ item.clone_name }}</button>
     </div>
-    <div class="modal-footer">
-       
+
+    <div *ngIf="showVoiceChat" class="voice-to-voice-wrapper">
+        <app-voice-recon #voiceRecon (voiceReconEvent)="sendMessageToCloneVoiceRecon($event, item.clone_name, item.voice_id)"></app-voice-recon>
     </div>
+     
+</div>
+
+<div class="modal-footer">
+    <p>Voice ID: {{ item.voice_id }}</p>
+</div>
+    
 

@@ -1,5 +1,7 @@
-<div class="custom-clones-wrapper">
+<div [@routeAnimations] class="custom-clones-wrapper">
     <h2>Custom Clones</h2>
+    <p>Due to voice training API limitations, you can train up to eight custom clones. You currently have {{cloneCount}} of 8 custom clones already trained.</p>
+   
     <div class="row custom-clone-row">
         <div class="col-md-4" *ngFor="let item of cloneData; let i = index">
             <div class="card mb-3">
@@ -7,14 +9,13 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ item.clone_name }}</h5>
                     <p class="card-text">Voice ID: {{ item.voice_id }}</p>
-                    <button (click)="openPopup(item, idleVideos[i])">Chat with clone</button>
+                    <button (click)="openPopup(item, idleVideos[i], talkingVideos[i])">Chat with clone</button>
                 </div>
             </div>
+            
             <ng-template #myModal let-c="close" let-d="dismiss">
                 <app-clone-modal [item]="item" [idleVideo]="idleVideos[i]" [talkingVideo]="talkingVideos[i]"></app-clone-modal>
             </ng-template>
-
-            
         </div>
     </div>
 </div>

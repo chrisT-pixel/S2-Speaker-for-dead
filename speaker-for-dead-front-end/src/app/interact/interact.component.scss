@@ -1,6 +1,12 @@
 $blue: #0052a0;
 $charcoal: #36454f;
 
+.spinner{
+    width: 70px!important;
+    height: 70px!important;
+    margin-top: 25px;
+}
+
 p{
     .mat-icon{
         padding-top: 3px;
@@ -70,7 +76,7 @@ input{
 .tp-box {
     position: relative;
     width: 100%;
-    height: 700px;
+    //height: 1100px;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
     -webkit-transform: transform 1s;
@@ -118,5 +124,9 @@ input{
 
 .mat-mdc-progress-bar{
     margin-top: 25px;
+}
+
+textarea{
+    width: 100%;
 }
 

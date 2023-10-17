@@ -2,16 +2,15 @@ import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CloneModalComponent } from '../clone-modal/clone-modal.component'; // Import your modal component
-
-
-
-
+import { CloneModalComponent } from '../clone-modal/clone-modal.component'; 
+//import { VoiceReconComponent } from '../voice-recon/voice-recon.component';
+import { fadeAnimation } from '../animations';
 
 @Component({
   selector: 'app-custom-clones',
   templateUrl: './custom-clones.component.html',
-  styleUrls: ['./custom-clones.component.scss']
+  styleUrls: ['./custom-clones.component.scss'],
+  animations: [fadeAnimation]
 })
 export class CustomClonesComponent {
 
@@ -19,29 +18,23 @@ export class CustomClonesComponent {
   images: string[] = [];
   idleVideos: any[] = [];
   talkingVideos: any[] = [];
-
-  //displayStyle = "none";
-   //@Input() item: any; // Input to receive clone data
+  cloneCount: number = 0;
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer, private modalService: NgbModal) { }
 
   ngOnInit() {
       this.http.get<any[]>('http://localhost:5000/api/get_clone_data').subscribe(data => {
           this.cloneData = data;
+          this.cloneCount = this.cloneData.length;
           this.loadImagesFromData();
-
-      });
+       });
   }
 
-  /*openPopup(item: any) {
-    const modalRef = this.modalService.open(CloneModalComponent);
-    modalRef.componentInstance.item = item; // Pass clone data to modal
-  }*/
-
-  openPopup(item: any, idleVideo: any) {
+  openPopup(item: any, idleVideo: any, talkingVideo: any) {
     const modalRef = this.modalService.open(CloneModalComponent);
     modalRef.componentInstance.item = item; // Pass clone data to modal
     modalRef.componentInstance.idleVideo = idleVideo; // Pass idleVideo data to modal
+    modalRef.componentInstance.talkingVideo = talkingVideo; // Pass idleVideo data to modal
 }
 
   async loadImagesFromData() {

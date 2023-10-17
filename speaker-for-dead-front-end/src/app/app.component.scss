@@ -6,6 +6,8 @@ $charcoal: #36454f;
     color: white;
     padding-top: 15px;
     padding-bottom: 15px;
+    animation: colorChange 5s linear infinite;
+    border-bottom: 5px solid $charcoal;
 
     a{
         color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
@@ -13,6 +15,7 @@ $charcoal: #36454f;
         display: block;
         color: white;
         margin-left: 25px;
+        transition: color 0.3s ease;
         &:hover{
             color: $charcoal;
         }
@@ -50,3 +53,21 @@ h2 {
         color: white;
     }
 }
+
+@keyframes colorChange {
+    0% {
+        background-color: $blue;
+        /* Initial color */
+    }
+
+    50% {
+        background-color: #0077cc;
+        /* Midpoint color */
+    }
+
+    100% {
+        background-color: $blue;
+        /* Final color */
+    }
+}
+

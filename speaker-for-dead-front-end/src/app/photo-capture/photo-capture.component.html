@@ -1,0 +1,14 @@
+<div class="image-capture-wrapper">
+    <div class="row">
+        <div class="col-sm-6">
+            <video #videoElement autoplay></video>
+        </div>
+        <div class="col-sm-6">
+            <canvas #canvasElement style="display: none;"></canvas>
+            <img #photoElement />
+        </div>
+    </div>
+
+    <button (click)="capturePhoto()">Capture Photo</button>
+    
+</div>

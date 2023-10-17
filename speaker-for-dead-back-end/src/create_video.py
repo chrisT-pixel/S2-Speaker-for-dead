@@ -4,6 +4,10 @@ import replicate
 from os import path
 from pydub import AudioSegment
 import math
+from PIL import Image
+#import pixellib
+#from tensorflow.keras.layers import BatchNormalization
+#from pixellib.tune_bg import alter_bg
 
 
 def get_most_recent_audio_as_mpeg():
@@ -182,6 +186,32 @@ def printAvailableVoiceDetails():
     response = requests.get(url, headers=headers)
     
     print(response.text)
+    
+def cropUploadedImage(file_name):
+    # Open the image
+    image = Image.open(file_name)
+
+    # Define the cropping rectangle (left, upper, right, lower)
+    left = 280
+    upper = 0  # No cropping from the top
+    right = image.width - 280
+    lower = image.height  # No cropping from the bottom
+
+    # Crop the image
+    cropped_image = image.crop((left, upper, right, lower))
+
+    # Save the cropped image
+    cropped_image.save(file_name)
+    
+'''def blurImageBackground():
+    change_bg = alter_bg()
+    img_file_path = f'image_uploads/Clay-face.jpg'
+    change_bg.load_pascalvoc_model("deeplabv3_xception_tf_dim_ordering_tf_kernels.h5")
+    change_bg.color_bg(img_file_path, colors = (0,128,0), output_image_name="colored_bg.jpg")
+    '''
+#blurImageBackground()
+
+    
 
 
 
