@@ -7,43 +7,43 @@ import { Component, ElementRef, ViewChild, EventEmitter, Output } from '@angular
 })
 export class PhotoCaptureComponent {
 
+  //access child elements components in the template and interact with them in this parent component
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
   @ViewChild('photoElement') photoElement!: ElementRef<HTMLImageElement>;
 
+  //custom event
   @Output() imageBlobEvent = new EventEmitter<Blob>();
 
+  //instance variables
   private mediaStream: MediaStream | null = null;
 
   constructor() {}
 
-  /*async ngAfterViewInit() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      this.videoElement.nativeElement.srcObject = stream;
-    } catch (error) {
-      console.error('Error accessing camera:', error);
-    }
-  }*/
-
+  //called after the view of the component has been initialized. Component's view, inc 
+  //its child components, has been fully set up and rendered.
   async ngAfterViewInit() {
     try {
+      //access device camera
       this.mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      console.log(this.mediaStream);
       this.videoElement.nativeElement.srcObject = this.mediaStream;
     } catch (error) {
       console.error('Error accessing camera:', error);
     }
   }
 
+  //called just before the component is destroyed or removed from the DOM
   ngOnDestroy() {
     if (this.mediaStream) {
       this.mediaStream.getTracks().forEach(track => track.stop());
     }
   }
 
-
+  //take photo on user click
   capturePhoto() {
     
+    //gather DOM elements
     const video = this.videoElement.nativeElement;
     const canvas = this.canvasElement.nativeElement;
     const photo = this.photoElement.nativeElement;

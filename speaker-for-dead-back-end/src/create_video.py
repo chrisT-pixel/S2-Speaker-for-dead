@@ -9,7 +9,7 @@ from PIL import Image
 #from tensorflow.keras.layers import BatchNormalization
 #from pixellib.tune_bg import alter_bg
 
-
+#used for lipsyncing clone
 def get_most_recent_audio_as_mpeg():
 
     # GET MOST RECENT AUDIO ID FROM ELEVENLABS
@@ -63,11 +63,13 @@ def get_most_recent_audio_as_mpeg():
     
 #END GET RECENT MP3 FROM ELEVENLABS
 
+#utility method to convert audio file formats for lipsyncing clone
 def convert_mpeg_to_wav(input):
     sound = AudioSegment.from_mp3(input)
     sound.export("current-response.wav", format="wav")
     print("converted mpeg to a wav - ready for machine learning")
 
+#utility method to create talking video (not currently used)
 def generate_talking_response_make_it_talk():
     output = replicate.run(
         "cudanexus/makeittalk:e63aa3e0830945d12340aba53c63e27288b5705eec0c8ea0db5b144c5d64dbf6",
@@ -77,6 +79,7 @@ def generate_talking_response_make_it_talk():
     )
     print(output)
 
+#utility method to generate lipsyncing videos 
 def generate_talking_response_sad_face():
     output = replicate.run(
         "cjwbw/sadtalker:3aa3dac9353cc4d6bd62a8f95957bd844003b401ca4e4a9b33baa574c549d376",
@@ -87,7 +90,7 @@ def generate_talking_response_sad_face():
     print(output)
     return output
 
-
+#utility method used to create idle and talking animation videos from input image
 def generate_videos_for_custom_clones(path_to_file, name):
     
     outputIdle = replicate.run(
@@ -119,6 +122,7 @@ def generate_videos_for_custom_clones(path_to_file, name):
     return local_idle_path, local_talking_path
     
 
+#utility method used to fetch and download the created idle and taling animated videos
 def downloadVideoFromReplicate(video_url, local_file_path):
     try:
         # Send an HTTP GET request to the video URL
@@ -142,7 +146,7 @@ def downloadVideoFromReplicate(video_url, local_file_path):
     
     
 
-
+#utility method to chop long audio recordings into smaller chunks for voice training
 def chop_audio_into_chunks():
 
     # Input MP3 file path
@@ -176,6 +180,7 @@ def chop_audio_into_chunks():
     
 url = "https://api.elevenlabs.io/v1/voices"
 
+#utility method to return and print all available voices
 def printAvailableVoiceDetails():
 
     headers = {
@@ -186,7 +191,8 @@ def printAvailableVoiceDetails():
     response = requests.get(url, headers=headers)
     
     print(response.text)
-    
+
+#utility method used to crop facial images taken by user webcam so they are suitable for video training    
 def cropUploadedImage(file_name):
     # Open the image
     image = Image.open(file_name)
@@ -209,7 +215,7 @@ def cropUploadedImage(file_name):
     change_bg.load_pascalvoc_model("deeplabv3_xception_tf_dim_ordering_tf_kernels.h5")
     change_bg.color_bg(img_file_path, colors = (0,128,0), output_image_name="colored_bg.jpg")
     '''
-#blurImageBackground()
+
 
     
 

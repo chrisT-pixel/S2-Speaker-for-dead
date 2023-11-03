@@ -1,6 +1,6 @@
 import os
 import time
-from typing import Callable, List, Tuple, Union
+from typing import Callable, List, Tuple, Union, Dict
 
 import re #for new converse_with_chunks function
 from typing import Generator #for new converse_with_chunks function
@@ -14,8 +14,10 @@ from tenacity import retry, stop_after_attempt, wait_random_exponential
 
 from src.api_key import open_ai_key
 
+
 openai.api_key = open_ai_key
 tokenizer = tiktoken.get_encoding("cl100k_base")
+
 
 class SpeakerForTheDead:
     '''
@@ -41,8 +43,9 @@ class SpeakerForTheDead:
         self.convo_history: List[str] = []
         self.convo_history_tokens: List[int] = []
         self.current_tokens: int = len(tokenizer.encode(system_prompt))
-        
+        self.chunk_count = 1;
         self.llm_input_limit = 4096
+        
         
     @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(10))
     def _create_embedding(self, x: str, engine: str='text-embedding-ada-002', sleep: float=1) -> np.ndarray:
@@ -99,6 +102,7 @@ class SpeakerForTheDead:
         
         else:
             return ''
+        
     
     @staticmethod
     def _adjust_whitespace(x: str) -> str:
@@ -163,7 +167,7 @@ class SpeakerForTheDead:
         
         return chunks
     
-    def converse(self, input_message: str, response_max_tokens: int = 500, debug_context: bool = False, time_it: bool = False) -> Union[str, Tuple[str, str]]:
+    def converse_davinci_legacy(self, input_message: str, response_max_tokens: int = 500, max_history_tokens: int = 1000, debug_context: bool = False, time_it: bool = False) -> Union[str, Tuple[str, str]]:
         '''
         This function returns a response for an input message.
         All previous input messages are stored internally to remember conversation history.
@@ -188,7 +192,7 @@ class SpeakerForTheDead:
         ------
         - When forming contexts and prompts, a 10 token buffer is used.
         '''
-        buffer_tokens = 100
+        buffer_tokens = 150
         
         input_message = f'User: {input_message}'
         input_message_tokens: int = len(tokenizer.encode(input_message))
@@ -197,6 +201,15 @@ class SpeakerForTheDead:
         self.convo_history.append(input_message)
         self.convo_history_tokens.append(input_message_tokens)
         self.current_tokens += input_message_tokens
+        
+        # Calculate the total token usage of the conversation history
+        total_history_tokens = sum(self.convo_history_tokens)
+
+        # Remove older messages if the history exceeds the maximum token limit
+        while total_history_tokens + buffer_tokens > max_history_tokens:
+            oldest_message_tokens = self.convo_history_tokens.pop(0)
+            oldest_message = self.convo_history.pop(0)
+            total_history_tokens -= oldest_message_tokens
         
         
         if self.current_tokens + response_max_tokens + buffer_tokens >= self.llm_input_limit:
@@ -259,8 +272,6 @@ class SpeakerForTheDead:
             print(f'OpenAI query time: {end_openai_query - start_openai_query}')
             
             
-        
-        
         output_message = f'{response["choices"][0]["text"].strip()}'
         
         self.convo_history.append(output_message)
@@ -272,6 +283,104 @@ class SpeakerForTheDead:
             return output_message
         else:
             return output_message, context
+        
+    
+    def converse(self
+            , input_message: str
+            , response_max_tokens: int = 1000
+            , vector_db_context_tokens: int = -1
+            , debug_context: bool = False
+            , time_it: bool = False
+        ) -> Union[str, Tuple[str, str]]:
+        
+        
+        print("calling new converse")
+        
+        buffer_tokens = 100
+        
+        if vector_db_context_tokens == -1:
+            vector_db_context_tokens = self.llm_input_limit
+        
+        
+        input_message_tokens: int = len(tokenizer.encode(input_message))
+
+            
+        self.convo_history.append({"role": "user", "content": input_message})
+        self.convo_history_tokens.append(input_message_tokens)
+        self.current_tokens += input_message_tokens
+        
+        # Removes conversation history if there are too many tokens.
+        if self.current_tokens + response_max_tokens + buffer_tokens >= self.llm_input_limit:
+            
+            takeout_sum: int = 0
+            
+            for i in range(len(self.convo_history)):
+                
+                takeout_sum += self.convo_history_tokens[i]
+                
+                if self.llm_input_limit - takeout_sum - self.buffer_tokens > response_max_tokens:
+                    self.convo_history = self.convo_history[i+1:]
+                    self.convo_history_tokens = self.convo_history_tokens[i+1:]
+                    self.current_tokens -= takeout_sum
+                    
+                    break
+            
+                
+        current_convo: str = "\n".join([message["content"] for message in self.convo_history])
+        
+        start_vector_search = time.time()
+        context: str = self._create_context(current_convo, max_len=min(self.llm_input_limit - self.current_tokens - response_max_tokens - buffer_tokens, vector_db_context_tokens))
+        end_vector_search = time.time()
+        
+        start_openai_query = time.time()
+        response: Dict = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": f"""
+                    {self.system_prompt}
+                    
+                    Context:
+                    {context}{current_convo}{self.name}
+                    """
+                
+            }] + self.convo_history,
+            temperature=0,
+            max_tokens=response_max_tokens,
+            frequency_penalty=0,
+            presence_penalty=0,
+            stop=None
+        )
+        end_openai_query = time.time()
+
+    
+        
+        
+        
+        
+        if time_it:
+            print(f'Vector search time: {end_vector_search - start_vector_search}')
+            print(f'OpenAI query time: {end_openai_query - start_openai_query}')
+
+        output_message: str = f'{response["choices"][0]["message"]["content"]}'
+        
+        self.convo_history.append(response["choices"][0]["message"])
+        output_message_tokens = len(tokenizer.encode(output_message))
+        self.convo_history_tokens.append(output_message_tokens)
+        self.current_tokens += output_message_tokens
+        
+        if not debug_context:
+            return output_message
+        else:
+            return output_message, context
+   
+
+    
+    
+
+    
+    
         
     def conversation_loop(
         self
@@ -319,7 +428,7 @@ class SpeakerForTheDead:
         
     
     
-    def converse_with_word_chunks_generator(self, input_message: str, response_max_tokens: int = 500, chunk_size_words: int = 10, debug_context: bool = False, time_it: bool = False) -> Generator[str, None, None]:
+    def converse_with_word_chunks_generator(self, input_message: str, response_max_tokens: int = 125, chunk_size_words: int = 10, debug_context: bool = False, time_it: bool = False) -> Generator[str, None, None]:
         buffer_tokens = 100
     
         input_message = f'User: {input_message}'
@@ -387,16 +496,32 @@ class SpeakerForTheDead:
         if chunk:
             output_chunk = ' '.join(chunk) + ' '
             output_chunks.append(output_chunk)
+            
+        self.chunk_count = len(output_chunks)
     
         for output_chunk in output_chunks:
             yield output_chunk
+            #print("yield")
     
         self.convo_history.append(response_text)
+        #print("RESPONSE TEXT")
+        #print(response_text)
         response_tokens = len(tokenizer.encode(response_text))
         self.convo_history_tokens.append(response_tokens)
         self.current_tokens += response_tokens
+        #print(len(output_chunks))
         
-        #return output_message
+        #send_output_chunks_length(len(output_chunks))
+        
+        #send_message_with_yield_count(len(output_chunks))
+        
+        #emit_thread = threading.Thread(target=emit_message_with_delay(len(output_chunks)))
+        #emit_thread.start()
+        
+        #print(self.chunk_count)
+        
+   
+        
         
         
 

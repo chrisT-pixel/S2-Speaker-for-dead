@@ -11,13 +11,16 @@ import { VoiceReconComponent } from '../voice-recon/voice-recon.component';
 })
 export class CloneModalComponent {
   
-  @Input() item: any; // Inputs to receive clone data
+  //pass data from parent components to this child component. 
+  @Input() item: any; 
   @Input() idleVideo: any;
   @Input() talkingVideo: any;
 
+  //access child elements components in the template and interact with them in this parent component
   @ViewChild('customCloneVideoElement', { static: false }) customCloneVideoElement: ElementRef | undefined;
   @ViewChild('voiceRecon', { static: false }) voiceRecon!: VoiceReconComponent;
 
+  //instance variables
   audioStreamStarted = false;
   currentVideo: string | undefined;
   textToSend: string | undefined;
@@ -27,6 +30,8 @@ export class CloneModalComponent {
   showVoiceChat: boolean = false;
   buttonLabel: string = 'Change To Voice To Voice Chat Session';
   alertLabel: string = 'Current Chat Style: Text to Voice';
+  currentResponse: string = '';
+
 
   constructor(private http: HttpClient, private cdRef: ChangeDetectorRef, private socket: Socket) {}
 
@@ -42,7 +47,7 @@ export class CloneModalComponent {
     this.currentVideo = this.idleVideo;
     // Subscribe to the 'audio_stream_started' channel
     this.socket.fromEvent('audio_stream_started').subscribe((data) => {
-      console.log('Received custom clone audio stream started:', data);
+      console.log('Received custom clone audio stream started: ', data);
       this.audioStreamStarted = true;
       this.currentVideo = this.talkingVideo;
       console.log(this.currentVideo);
@@ -50,14 +55,31 @@ export class CloneModalComponent {
       
     });
   }
+  
+  ngOnDestroy(): void{ //if the modal is closed and voice recon is still running then stop the voice recon service
+    if(this.voiceRecon != undefined && this.voiceRecon.isStartButtonDisabled){
+      console.log("stopping voice recon due to modal closing");
+      this.voiceRecon.stopService();
+    }
+  }
 
-  // Method to seek to the beginning, load, and optionally play the element
+  restartVoiceReconDueToSilence(){ //allow user to manually restart the service if they are silent too long and voice recon shuts off
+    if(this.voiceRecon != undefined && this.voiceRecon.isStartButtonDisabled){
+      this.voiceRecon.startService();
+    }
+  }
+
+  // Method to seek to the beginning, load, and optionally play the appropriate video
   seekLoadAndPlay(element: ElementRef | undefined, playVideo: boolean = false): void {
     
     if (element && element.nativeElement instanceof HTMLVideoElement) {
-      this.seekLoadAndPlayCount++;
+
+      if(this.showVoiceChat){ 
+        this.seekLoadAndPlayCount++;
+      }
       
-      if(this.seekLoadAndPlayCount % 2 === 0){
+      //the voice recon service needs to be restarted when the idle video begins to play after response
+      if(this.seekLoadAndPlayCount % 2 === 0 && this.showVoiceChat){
          console.log("restarting voice recon service");
          this.voiceRecon.startService();
       }
@@ -68,7 +90,7 @@ export class CloneModalComponent {
 
       if (playVideo) {
         console.log("made it to play");
-        videoElement.play(); // Play the updated video
+        //videoElement.play(); // Play the updated video
         
       }
 
@@ -81,14 +103,16 @@ export class CloneModalComponent {
 
   sendAndReceiveText(cloneName: string, voiceID: string): void {
     const apiUrl = 'http://localhost:5000/api/custom_clone_chat';  
-    console.log(cloneName + this.textToSend + voiceID);
+    console.log(cloneName + ' ' + this.textToSend + ' ' + voiceID);
     const data = { name: cloneName, text: this.textToSend, customVoiceID: voiceID };
 
     this.http.post<any>(apiUrl, data).subscribe(
       (response) => {
         this.responseText = response.response_text; // Store the response text
         this.currentVideo = this.idleVideo;
-        this.seekLoadAndPlay(this.customCloneVideoElement, false);  
+        this.seekLoadAndPlay(this.customCloneVideoElement, false);
+        console.log(response.response_text);
+        this.currentResponse = response.response_text;
       },
       (error) => {  
         console.error('Error occurred:', error);
@@ -99,7 +123,7 @@ export class CloneModalComponent {
 
   sendMessageToCloneVoiceRecon(prompt: string, cloneName: string, voiceID: string){
       
-      console.log(prompt + cloneName + voiceID);
+      console.log(prompt + ' ' + cloneName + ' ' + voiceID);
       const apiUrl = 'http://localhost:5000/api/custom_clone_chat';  
       const data = { name: cloneName, text: prompt, customVoiceID: voiceID };
 
@@ -108,6 +132,8 @@ export class CloneModalComponent {
         this.responseText = response.response_text; // Store the response text
         this.currentVideo = this.idleVideo;
         this.seekLoadAndPlay(this.customCloneVideoElement, false);  
+        console.log(response.response_text);
+        this.currentResponse = response.response_text;
       },
       (error) => {  
         console.error('Error occurred:', error);

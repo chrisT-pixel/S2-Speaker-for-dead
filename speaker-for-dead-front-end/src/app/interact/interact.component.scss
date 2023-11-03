@@ -1,6 +1,31 @@
 $blue: #0052a0;
 $charcoal: #36454f;
 
+#tickBox{
+    margin-bottom: 20px;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+a {
+    color: $blue;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        color: $charcoal;
+        text-decoration: underline;
+    }
+}
+
+#voiceReconWrapper{
+    margin-bottom: 20px;
+    width: 400px;
+
+    
+}
+
 .spinner{
     width: 70px!important;
     height: 70px!important;

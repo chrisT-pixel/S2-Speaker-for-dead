@@ -1,42 +1,31 @@
-I'm a fourth year software engineering student with experience in Java, C#, C++, Python, AI and software architecture design.
+I'm a fourth year software engineering student at the univerity of south australia with experience in Java, C#, C++, Python, AI and software architecture design.
 
-I am also an accomplished web developer with substantial experience with PHP, jQuery, SQL and custom Wordpress theme development. Both academically and professionally, I have experience working with an array of technologies and frameworks, including AngularJS, React and MongoDB.
+I am also an accomplished web developer with substantial experience with PHP, jQuery, SQL and custom Wordpress theme development. 
 
-I have been the recipient of several university awards and grants, and currently maintain a GPA of 6.38
+Both academically and professionally, I have experience working with an array of technologies and frameworks, including AngularJS, React and MongoDB.
 
-Profile
-I’m a motivated fourth year software engineering student on the cusp of graduation, bringing a foundation in professional web development and a passion for creating innovative digital solutions. With hands-on experience developing software and web applications, I am well-prepared to contribute to dynamic tech teams and undertake complex challenges. I enjoy problem solving, hold a current GPA of 6.38 and I have experience in a wide scope of programming languages and frameworks. My year-long honours project is focused on creating AI based chat-clones with custom domain knowledge.
-Key Skills
-Java, Python, C++, AngularJS, PHP, jQuery, artificial intelligence, object orientated principles, software architecture and design, client engagement.
-Experience
-Software Engineering Intern, elmTEK - Dec 2022-Feb 2023
-- GUI development using Qt and C++
-- Creation of re-usable AngularJS components
-- Attending daily scrum stand-up meetings
-- Contribution to UX workshop
-Web Developer, Pink Panda Digital Solutions - 2021
-- Custom Wordpress theme development using the Roots/Sage Framework
-- Installing & utilising code libraries using Node Package Manager
-- Contributing to projects in tandem with other developers
-- Creating re-usable modules using ACF content blocks
-Senior Web Developer, Algo Mas - 2018-2021
-- Custom Wordpress theme development
-- Custom ‘Unity’ theme development (proprietary Adelaide City Council CMS)
-- Hosting administration (managing company VPS)
-- Daily use of PHP for creation of session & cookie based applications
-- Daily use of jQuery for front-end interaction
+I have hands-on experience developing software and web applications.
 
-Web Developer, MyAdd Digital - 2017-2018
-- Custom Wordpress theme development
-- Creating scope documentation to outline project deliverables
-- eCommerce development
-Education
-University of South Australia, Adelaide, SA - Bachelor of Software Engineering (Honours) - Fourth year student with graduation in 2023
-TAFE SA, Adelaide, SA - Diploma of Software Development - 2020
-North Coast TAFE, Lismore, NSW - Diploma of Web Development - 2015 Prizes & Awards
-2023 - UniSA University Merit Awards
-2022 - elmTEK Grant
-2021 - UniSA Chancellor’s Letter of Commendation
-2015 - TAFE award of excellence: web-based technologies
-Interests
-Cycling, travel, software engineering, sports
+I am well-prepared to contribute to dynamic tech teams and undertake complex challenges. 
+
+I enjoy problem solving, hold a current GPA of 6 point 38 and I have experience in a wide scope of programming languages and frameworks. 
+
+My year-long honours project is focused on creating AI based chat-clones with custom domain knowledge.
+
+I am a dual citizen of canada and australia
+
+I enjoy cycling, travel, software engineering and sports
+
+I have a four year old son named Alby and a three year old daughter named Maple.
+
+I live in Glenelg, South Australia.
+
+I was born in Stratford, Ontario, in Canada.
+
+I have worked at several web design agencies and have performed freelance web development services 
+
+My favourite sports teams are the Toronto Maple Leafs and the Toronto Blue Jays 
+
+
+
+

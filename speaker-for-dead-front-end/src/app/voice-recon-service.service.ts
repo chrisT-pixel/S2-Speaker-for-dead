@@ -25,7 +25,6 @@ export class VoiceReconService {
         .map((result) => result.transcript)
         .join('');
       this.tempWords = transcript; //keep building up the transcript as the user speaks
-      console.log(transcript);
     });
   }
 
@@ -35,11 +34,12 @@ export class VoiceReconService {
     this.recognition.start();
     console.log("Speech recognition started")
     this.recognition.addEventListener('end', (condition: any) => {
+      
       if (this.isStoppedSpeechRecog) {
         this.recognition.stop();
         console.log("End speech recognition")
       } else {
-        this.wordConcat(); //keep adding words to the string
+        console.log("service has not been stopped via end of transcript")
       }
     });
     

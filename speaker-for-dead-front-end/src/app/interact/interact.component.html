@@ -1,23 +1,32 @@
 <button (click)="toggleFlip()" class="cloneTypeButton">Toggle Features (Mark Billinghurst or Create New Clone Attributes) <mat-icon>swap_vert</mat-icon></button>
 <div [@routeAnimations] class="interact-wrapper">
     
-    <div class="tp-box" [@flipState]="flip" [style.height.px]="flip === 'active' ? 1300 : 700">
+    <div class="tp-box" [@flipState]="flip" [style.height.px]="flip === 'active' ? 1300 : 800">
         <div class="tp-box__side tp-box__front">
             <h2>Current Clone Type: {{ isVideoClone ? 'Mark Billinghurst Video Clone With Lip syncing' : 'Mark Billinghurst Low Latency Clone: No Lip syncing' }}</h2>
             <button [disabled]="isCloneTypeButtonDisabled" (click)="toggleCloneType()">Toggle Clone Type</button>
             
             <br />
-            <input type="text" [(ngModel)]="textToSend" placeholder="Enter your prompt">
-            
-            <button (click)="isVideoClone ? sendAndReceiveTextVideo() : sendAndReceiveText()">
-                {{ isVideoClone ? 'Submit to video clone' : 'Submit to audio clone' }} 
-            </button>
-            
-            <p *ngIf="responseText">Answer: {{ responseText }}</p>
+
+            <div *ngIf="!isVoiceRecon">
+                <input type="text" [(ngModel)]="textToSend" placeholder="Enter your prompt">
+                
+                <button (click)="isVideoClone ? sendAndReceiveTextVideo() : sendAndReceiveText()">
+                    {{ isVideoClone ? 'Submit to video clone' : 'Submit to audio clone' }} 
+                </button>
+            </div>
             
             <div *ngIf="!isVideoClone">
+                <input id="tickBox" type="checkbox" [(ngModel)]="isVoiceRecon"> Use Voice Recognition
+                
+                <div id="voiceReconWrapper" *ngIf="isVoiceRecon">
+                    <app-voice-recon #voiceRecon (voiceReconEvent)="sendMessageToMarkVoiceRecon($event)"></app-voice-recon>
+                </div>
+                <p *ngIf="isVoiceRecon">If you are silent for too long during a chat, you can <a (click)="restartVoiceReconDueToSilence()">restart</a> the
+                    voice Recognition service to continue the conversation</p>
+                
                 <div>
-                    <video width="100%" height="320" #lowLatencyElement autoplay loop poster="../assets/images/mark-animated.gif">
+                    <video width="100%" height="420" #lowLatencyElement autoplay loop poster="../assets/images/mark-animated.gif">
                         <source [src]="responseVideo" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
@@ -33,13 +42,14 @@
                     <p>Lip synced video is generating! Please Wait!</p>
                 </div>
                 <div>
-                    <video width="100%" height="320" #videoElement autoplay poster="../assets/images/mark-animated.gif">
+                    <video width="100%" height="420" #videoElement autoplay poster="../assets/images/mark-animated.gif">
                         <source [src]="responseVideo" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
             
             </div>
+            <!--<p *ngIf="responseText">Answer: {{ responseText }}</p>-->
         </div>
         <div class="tp-box__side tp-box__back">
             <h2>Create New Clone Attributes</h2>
@@ -63,16 +73,34 @@
                 <p>Step 1: Add clone name (first name only)</p>
                 <input type="text" [(ngModel)]="audioName" (change)="onNameSelected($event)" #audioNameInput
                     placeholder="Enter Clone Name">
-                <p>Step 2: Upload audio file of clone voice (recommended 2 - 3 minutes)</p>
+                <p>Step 2: Upload audio file of clone voice (recommended 2 - 3 minutes) or select from pre-trained voices</p>
                 <input type="file" #audioFileInput (change)="onAudioFileSelected($event)" accept=".mp3">
+                <select [(ngModel)]="selectedPreTrainedVoice" (change)="voicePreTrained()">
+                    <option value="" disabled selected>Select a voice</option>
+                    <option value="ji43cfrwFqQxIsBNGqc2">Young American Male</option>
+                    <option value="AemkNPeMbzO16lJwlG0a">Old American Male</option>
+                    <option value="4m94jDoUWwyV22bAjjOY">Young American Female</option>
+                    <option value="H2dRx7tcIK2Z8fYHSn11">Old American Female</option>
+                    <option value="e8m64nApaX1ul6l2Y3Wu">Young British Male</option>
+                    <option value="XUKIgVA2j32X1QdbDnbE">Old British Male</option>
+                    <option value="e8mfePEntmYENuA319Nz">Young British Female</option>
+                    <option value="dPmSflxTnOiktZGF3bGp">Old British Female</option>
+                    <option value="yEJgAMDJNbda2m9CQH6l">Young Indian Male</option>
+                    <option value="RaSfv7MFWiTJE1cJvIIk">Young Indian Female</option>
+                    <option value="DEGfTob2hH6doUEN6BY6">Old African Male</option>
+                    <option value="orKNsYbbwewChL6EkyIQ">Nerdy Young American Female</option>
+                    <option value="gDgMZzIH74jGP4lM8Wr5">Middle Aged Australian Female</option>
+                    <option value="V1dbBTIJitvM4XOyay0P">Middle Aged Irish Female</option>
+                    <option value="5YWaDQm6C80WiBWGdRPE">Middle Aged American Male</option>
+                </select>
                 <br />
                 <p>Step 3: Upload image file of clone (recommended square 256 * 256 px)</p>
                 <input type="file" #imageFileInput (change)="onImageFileSelected($event)" accept="image/*">
                 <br />
-                <p>Step 4: Add text tile with as much information about your clone as possible (in .txt format)</p>
+                <p>Step 4: Add text tile with as much information about your clone as possible (in .txt format). Line-by-line Declarative statements in the first person recommended (i.e.: "I was born in Sydney.")</p>
                 <input type="file" #contextFileInput (change)="onContextFileSelected($event)" accept=".txt">
                 <br />
-                <button (click)="createCloneUsingUploads()" [disabled]="!audioName || !audioFileSelected || !imageFileSelected">Create Clone</button>
+                <button (click)="createCloneUsingUploads()" [disabled]="!audioName || !imageFileSelected">Create Clone</button>
                 <br />
 
             </div>
@@ -88,7 +116,7 @@
                 <p>Step 3: Create custom image file of clone</p>
                 <app-photo-capture (imageBlobEvent)="handleImageBlob($event)"></app-photo-capture>
                 <br />
-                <p>Step 4: Write as much information about your clone as possible</p>
+                <p>Step 4: Write as much information about your clone as possible. Line-by-line Declarative statements in the first person recommended (i.e.: "I was born in Sydney.")</p>
                 <textarea [(ngModel)]="contextData" #contextFileInput rows="8" cols="50"></textarea>
                 <br />
                 <button (click)="createCloneUsingCustomItems()">Create Clone</button>

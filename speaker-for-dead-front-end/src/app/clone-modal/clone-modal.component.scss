@@ -16,6 +16,8 @@ $charcoal: #36454f;
 
 .modal-body{
 
+    background: linear-gradient(to bottom, rgba(0, 82, 160, 1), rgba(255, 0, 0, 0));
+
     video{
         margin-bottom: 40px;
         margin: 0 auto;
@@ -32,9 +34,17 @@ $charcoal: #36454f;
 
 .modal-footer{
     p {
-            font-weight: bold;
-            text-align: center;
+        font-weight: bold;
+        text-align: center;
         }
+    a{
+        color: $blue;
+        cursor: pointer;
+        &:hover{
+            color: $charcoal;
+            text-decoration: underline;
+        }
+    }
 }
 
 .alertDiv{

@@ -20,6 +20,10 @@
 </div>
 
 <div class="modal-footer">
+    <div *ngIf="showVoiceChat" class="voice-to-voice-wrapper">
+        <p>If you are silent for too long during a chat, you can <a (click)="restartVoiceReconDueToSilence()">restart</a> the voice Recognition service to continue the conversation</p>
+    </div>
+    <p>Current Response: {{currentResponse}}<p>
     <p>Voice ID: {{ item.voice_id }}</p>
 </div>
     

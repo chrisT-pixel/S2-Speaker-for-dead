@@ -11,11 +11,13 @@ import * as RecordRTC from 'recordrtc';
 })
 export class VoiceRecorderComponent {
   
+  //instance variables
   record: any;
   recording = false;
   fileUrl: any;
   error: any;
 
+  //custom event
   @Output() fileUrlEvent = new EventEmitter<string>();
   
   constructor(private domSanitizer: DomSanitizer) {}
@@ -24,7 +26,7 @@ export class VoiceRecorderComponent {
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }
   
-  //Start recording.
+  //Start recording voice.
   initiateRecording() {
     this.recording = true;
     let mediaConstraints = {
@@ -33,9 +35,8 @@ export class VoiceRecorderComponent {
     };
     navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
   }
-  /**
-  * Will be called automatically.
-  */
+  
+  //method will be called automatically.
   successCallback(stream: any) {
     var options = {
     mimeType: "audio/mp3",
@@ -47,16 +48,15 @@ export class VoiceRecorderComponent {
     this.record = new StereoAudioRecorder(stream, options);
     this.record.record();
     }
-  /**
-  * Stop recording.
-  */
+  
+  //Stop recording.
   stopRecording() {
     this.recording = false;
     this.record.stop(this.processRecording.bind(this));
   }
 
   /**
-  * processRecording Do what ever you want with blob
+  * process recording blob used to train viu
   * @param  {any} blob Blog
   */
   processRecording(blob: any) {
@@ -67,10 +67,12 @@ export class VoiceRecorderComponent {
     this.fileUrlEvent.emit(this.fileUrl); 
 
   }
+  
   //Process Error.
   errorCallback(error: any) {
     this.error = 'Can not play audio in your browser';
   }
+  
   ngOnInit() {}
 
 }
